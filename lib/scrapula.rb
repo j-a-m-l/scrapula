@@ -5,7 +5,7 @@ require 'mechanize'
 # https://github.com/taf2/curb
 
 module Scrapula
-	VERSION = '0.1.2'
+	VERSION = '0.1.8'
 
 	# TODO verbose
 
@@ -31,9 +31,7 @@ module Scrapula
 		end
 
 		# Returns the title of the page
-		def title
-			go('head > title').text
-		end
+		def title; go('head > title').text end
 
 		# Returns the entries of the Meta headers
 		def meta
@@ -115,7 +113,7 @@ module Scrapula
 
 			# Search the page with XPath / CSS query
 			def go query, &block
-				page {|page| block_given? ? block.call(page.search query) : page.search(query) }
+				page {|p| block_given? ? block.call(p.search query) : p.search(query) }
 			end
 
 			# Sends requests and stores each new different url + data
