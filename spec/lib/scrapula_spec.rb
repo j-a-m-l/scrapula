@@ -1,21 +1,48 @@
 require 'scrapula'
 
+# TODO doubles
 describe Scrapula do
 
 	describe 'get http method' do
 
 		subject { Scrapula.get 'twitter.com' }
 
-		describe '#anchor' do
-			it 'should get an anchor' do
-				subject.anchor('.footer.inline-list li:first a').should == ['About', '/about']
+		describe '#title' do
+			it 'gets the title' do
+				subject.title.should == 'Twitter'
 			end
 		end
 
-		# TODO link alias
+		describe '#meta' do
+			it 'should return all entries' do
+				subject.meta.should == [
+					{'charset' => 'utf-8'},
+					{'http-equiv' => 'X-UA-Compatible'},
+					{'name' => 'description'}
+				]
+			end
+		end
+
+		describe 'block' do
+			it "should accept a block" do
+				Scrapula.get('twitter.com') { int('.copyright').should == 2012 }
+			end
+		end
+
+		describe '#anchor (alias #link)' do
+			it 'should get an anchor' do
+				subject.anchor('.footer.inline-list li:first a').should == ['About', '/about']
+			end
+
+			pending
+			it 'should return all the anchors' do
+				subject.anchor.should == [
+					[]
+				]
+			end
+		end
 
 		describe '#int' do
-			# TODO 4,123 567.789
 			it 'should get an integer' do
 				subject.int('.copyright').should == 2012
 			end
@@ -29,7 +56,7 @@ describe Scrapula do
 			end
 
 			it 'should return an array of results' do
-				subject.nodes('span.placeholder') do |node, result|
+				subject.nodes('label.placeholder') do |node, result|
 					result[:t] = node.text
 				end.should == [{t: "Username or email"}, {t: "Password"}, {t: "Full name"}, {t: "Email"}, {t: "Password"}]
 			end
@@ -51,14 +78,25 @@ describe Scrapula do
 
 	end
 
-	describe 'block' do
-		it "should accept a block" do
-			Scrapula.get('twitter.com') { int('.copyright').should == 2012 }
+	describe '#page' do
+		
+	end
+
+	describe '#table' do
+		
+	end
+
+	describe '#go' do
+		describe 'query not found' do
+			pending
+			it "throws an error" do
+			end
 		end
 	end
 
 	# TODO
-	describe 'cache' do
-		
+	describe '#request' do
+		describe 'cache' do
+		end
 	end
 end

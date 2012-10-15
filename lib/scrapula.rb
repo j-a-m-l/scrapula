@@ -1,6 +1,9 @@
 require 'digest/sha1'
 require 'mechanize'
 
+# TODO multicurl
+# https://github.com/taf2/curb
+
 module Scrapula
 	VERSION = '0.1.2'
 
@@ -27,11 +30,26 @@ module Scrapula
 			yield self if block_given?
 		end
 
-		def meta entry, &block
-
+		# Returns the title of the page
+		def title
+			go('head > title').text
 		end
 
-		# Extract text and href from an anchor using a XPath / CSS query
+		# Returns the entries of the Meta headers
+		def meta
+			results = []
+
+			go 'head > meta' do |metas|
+				metas.each do |meta|
+					name = meta.attributes.first[0]
+					results << {name => meta[name]}
+				end if metas
+			end
+
+			results
+		end
+
+		# Extract text and href attribute from an anchor using a XPath / CSS query
 		# If you need more attributes, you can use a block
 		def anchor query, &block
 			go query do |node|
@@ -42,11 +60,17 @@ module Scrapula
 		alias link anchor
 
 		# Extracts an integer using a XPath / CSS query
-		# If you need a complex sanization, you can use a block
+		# The default sanization can get integers like 4,123 or 345.678.234 TODO
+		# If you need a complex one, you can use a block
 		def int query, &block
 			go query do |node|
 				block_given? ? block.call(node.text) : node.text.slice(/\d+/).to_i
 			end
+		end
+
+		# TODO
+		def table query, &block
+
 		end
 
 		# Extracts nodes using a XPath / CSS query
@@ -63,17 +87,24 @@ module Scrapula
 			results
 		end
 
+		# Gets a raw page (Mechanize::Page object)
+		def page &block
+			request do |agent, page|
+				begin
+					yield page if block_given?
+				rescue => e
+					puts "ERROR: #{e.message}"
+					exit 1
+				end
+			end
+		end
+
 		private
 
 			# Search the page with XPath / CSS query
 			def go query, &block
-				request do |agent, page|
-					begin
-						yield page.search query
-					rescue => e
-						puts "ERROR: #{e.message}"
-						exit 1
-					end
+				page do |page|
+					block_given? ? block.call(page.search query) : page.search(query)
 				end
 			end
 

@@ -14,10 +14,6 @@ If you want to show the output of some steps:
 Scrapula.verbose = true
 ```
 
-Command line
-=
-TODO
-
 Examples
 =
 TODO
@@ -27,15 +23,7 @@ API
 TODO
 You can also use the method get to obtain a page a manipulate it inside its block
 
-go ->
-get
-post
-go_int ->
-get_int
-post_int
-go_results ->
-get_results
-post_results
+go -> get, post
 
 Authors
 =
