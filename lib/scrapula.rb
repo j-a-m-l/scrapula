@@ -42,7 +42,19 @@ module Scrapula
 			go 'head > meta' do |metas|
 				metas.each do |meta|
 					name = meta.attributes.first[0]
-					results << {name => meta[name]}
+
+					if 'charset' == name
+						value = meta[name]
+					elsif 'http-equiv' == name || 'name' == name
+						name = meta[name]
+						value = meta.attributes['content'].value
+					else
+						raise 'Unknown meta'
+					end
+
+					results << {name => value}
+
+					# block.call(name, value, meta) if block_given?
 				end if metas
 			end
 
@@ -103,9 +115,7 @@ module Scrapula
 
 			# Search the page with XPath / CSS query
 			def go query, &block
-				page do |page|
-					block_given? ? block.call(page.search query) : page.search(query)
-				end
+				page {|page| block_given? ? block.call(page.search query) : page.search(query) }
 			end
 
 			# Sends requests and stores each new different url + data

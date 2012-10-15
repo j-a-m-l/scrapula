@@ -17,8 +17,8 @@ describe Scrapula do
 			it 'should return all entries' do
 				subject.meta.should == [
 					{'charset' => 'utf-8'},
-					{'http-equiv' => 'X-UA-Compatible'},
-					{'name' => 'description'}
+					{'X-UA-Compatible' => 'IE=edge,chrome=1'},
+					{'description' => "Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news."}
 				]
 			end
 		end
@@ -34,8 +34,8 @@ describe Scrapula do
 				subject.anchor('.footer.inline-list li:first a').should == ['About', '/about']
 			end
 
-			pending
 			it 'should return all the anchors' do
+				pending
 				subject.anchor.should == [
 					[]
 				]
