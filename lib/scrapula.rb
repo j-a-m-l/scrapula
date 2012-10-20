@@ -5,7 +5,7 @@ require 'mechanize'
 # https://github.com/taf2/curb
 
 module Scrapula
-	VERSION = '0.1.8'
+	VERSION = '0.1.9'
 
 	# TODO verbose
 
@@ -35,7 +35,7 @@ module Scrapula
 
 		# Returns the entries of the Meta headers
 		def meta
-			results = []
+			results = {}
 
 			go 'head > meta' do |metas|
 				metas.each do |meta|
@@ -50,7 +50,7 @@ module Scrapula
 						raise 'Unknown meta'
 					end
 
-					results << {name => value}
+					results[name] = value
 
 					# block.call(name, value, meta) if block_given?
 				end if metas
@@ -59,7 +59,9 @@ module Scrapula
 			results
 		end
 
-		# Extract text and href attribute from an anchor using a XPath / CSS query
+		alias metas meta
+
+		# Extract text and href attribute from an anchor
 		# If you need more attributes, you can use a block
 		def anchor query, &block
 			go query do |node|
@@ -69,8 +71,8 @@ module Scrapula
 
 		alias link anchor
 
-		# Extracts an integer using a XPath / CSS query
-		# The default sanization can get integers like 4,123 or 345.678.234 TODO
+		# Extracts an integer
+		# The default sanitization can admit integers like 4,123 or 345.678.234 FIXME
 		# If you need a complex one, you can use a block
 		def int query, &block
 			go query do |node|
@@ -78,12 +80,13 @@ module Scrapula
 			end
 		end
 
-		# TODO
+		# TODO Extracts the data of a table and returns it as an array or hash
 		def table query, &block
 
 		end
 
-		# Extracts nodes using a XPath / CSS query
+		# Get nodes (Nokogiri::XML::Node)
+		# It yield the node and an empty hash to the block TODO remove results...
 		def nodes query, &block
 			results = []
 
@@ -103,6 +106,7 @@ module Scrapula
 				begin
 					yield page if block_given?
 				rescue => e
+					# TODO
 					puts "ERROR: #{e.message}"
 					exit 1
 				end

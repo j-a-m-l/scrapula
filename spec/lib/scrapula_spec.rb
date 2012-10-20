@@ -3,6 +3,14 @@ require 'scrapula'
 # TODO doubles
 describe Scrapula do
 
+	# xit 'gets the title' do
+	# 	subject.title(url).should == 'Twitter'
+	# end
+
+	# xit 'gets the metas' do
+	# 	subject.metas(url).should == 'Twitter'
+	# end
+
 	describe 'get http method' do
 
 		subject { Scrapula.get 'twitter.com' }
@@ -13,13 +21,14 @@ describe Scrapula do
 			end
 		end
 
-		describe '#meta' do
+		describe '#meta (alias #metas)' do
 			it 'should return all entries' do
-				subject.meta.should == [
-					{'charset' => 'utf-8'},
-					{'X-UA-Compatible' => 'IE=edge,chrome=1'},
-					{'description' => "Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news."}
-				]
+				subject.meta.should == {
+					'charset' => 'utf-8',
+					'X-UA-Compatible' => 'IE=edge,chrome=1',
+					'description' => "Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.",
+					'swift-page-name' => 'front'
+				}
 			end
 		end
 

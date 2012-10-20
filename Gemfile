@@ -1,8 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rake'
 gem 'nokogiri'
 gem 'mechanize'
+
+group :development do
+	gem 'rake'
+end
 
 group :test do
 	gem 'rspec'
