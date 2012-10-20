@@ -5,7 +5,7 @@ require 'mechanize'
 # https://github.com/taf2/curb
 
 module Scrapula
-	VERSION = '0.1.9'
+	VERSION = '0.2.0'
 
 	# TODO verbose
 
@@ -43,7 +43,7 @@ module Scrapula
 
 					if 'charset' == name
 						value = meta[name]
-					elsif 'http-equiv' == name || 'name' == name
+					elsif 'http-equiv' == name || 'name' == name || 'property' == name
 						name = meta[name]
 						value = meta.attributes['content'].value
 					else
