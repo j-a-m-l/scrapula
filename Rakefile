@@ -12,6 +12,9 @@ RSpec::Core::RakeTask.new do |t|
 	t.pattern = "./spec/**/*_spec.rb"
 end
 
+# Alias
+task :test => :spec
+
 desc "Happy coverage"
 task :coverage do
 	ENV['COVERAGE'] = 'true'
