@@ -1,20 +1,7 @@
 require 'nokogiri'
-require 'digest/sha1'
 
 module Scrapula
-	class Search
-		attr_reader :url
-
-		def initialize method, url, data=nil, &block
-			raise "Invalid http method: #{method}" unless Scrapula.http_methods.include? method
-
-			# Prepend the protocol
-			url.sub! /^(?!(?:https?:\/\/))/, 'http://'
-
-			@method, @url, @data, @cache, @agent = method, url, data, {}, Agent.new
-
-			yield self if block_given?
-		end
+	module Scraper
 
 		# Returns the title of the page
 		def title; go('head > title').text end
@@ -88,33 +75,12 @@ module Scrapula
 			results
 		end
 
-		# Gets a raw page (Mechanize::Page object)
-		def page &block
-			request do |agent, page|
-				begin
-					yield page if block_given?
-				rescue => e
-					puts "ERROR: #{e.message}" if Scrapula.verbose
-					exit 1
-				end
-			end
+	private
+
+		# Search the page with XPath / CSS query
+		def go query, &block
+			page {|p| block_given? ? block.call(p.search query) : p.search(query) }
 		end
-
-		private
-
-			# Search the page with XPath / CSS query
-			def go query, &block
-				page {|p| block_given? ? block.call(p.search query) : p.search(query) }
-			end
-
-			# Sends requests and stores each new different url + data
-			def request &block
-				key = Digest::SHA1.hexdigest @url + @data.to_s
-
-				@cache[key] = @agent.__send__(@method, @url, @data) unless @cache.include? key
-
-				yield @agent, @cache[key]
-			end
 
 	end
 end

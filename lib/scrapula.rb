@@ -1,6 +1,7 @@
 require 'scrapula/version'
 require 'scrapula/agent'
-require 'scrapula/search'
+require 'scrapula/scraper'
+require 'scrapula/request'
 
 module Scrapula
 
@@ -13,7 +14,7 @@ module Scrapula
 		attr_accessor :verbose, :logger
 
 		define_method(:http_methods) { @@http_methods }
-		@@http_methods.each {|http| define_method(http) {|*args| Search.new *[http, *args] } }
+		@@http_methods.each {|http| define_method(http) {|*args| Request.new *[http, *args] } }
 	end
 
 end
