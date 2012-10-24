@@ -1,6 +1,6 @@
 require 'scrapula'
 
-# TODO doubles
+# TODO doubles, fixtures
 describe Scrapula do
 
 	# xit 'gets the title' do
@@ -29,6 +29,10 @@ describe Scrapula do
 					'description' => "Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.",
 					'swift-page-name' => 'front'
 				}
+			end
+
+			xit 'warn about unknown metas' do
+
 			end
 		end
 
