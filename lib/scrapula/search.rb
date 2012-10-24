@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'digest/sha1'
 
 module Scrapula
