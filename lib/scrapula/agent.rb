@@ -1,18 +1,13 @@
-require 'mechanize'
-
-# TODO multicurl
-
 module Scrapula
-	class Agent
 
-		def initialize
-			@agent = Mechanize.new
-		end
-
-		def method_missing name, *args
-			puts "\n\t > Scrapula::Agent#method_missing: #{name}" if Scrapula.verbose
-			@agent.__send__ name.to_sym, *args
-		end
-
+	# Agent inherits depending on configured agent
+	case Scrapula.agent
+		when 'Mechanize' then
+			require 'mechanize'
+			class Agent < Mechanize; end
+		# TODO Curl
+		# TODO Multi-curl?
+		else raise 'Unknown agent'
 	end
+
 end
