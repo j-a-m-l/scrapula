@@ -1,13 +1,3 @@
-module Scrapula
-
-	# TODO verbose, logger
-	@verbose, @logger, @agent = false, nil, 'Mechanize'
-
-	@@http_methods = ['get', 'post']
-
-	class << self; attr_accessor :verbose, :logger, :agent end
-end
-
 require 'scrapula/version'
 require 'scrapula/agent'
 require 'scrapula/scraper'
@@ -15,9 +5,28 @@ require 'scrapula/request'
 
 module Scrapula
 
+  HTTP_METHODS = %w[get post]
+
+  # # TODO verbose, logger
+  # @verbose, @logger, @agent = false, nil, 'Mechanize'
+
 	class << self
-		define_method(:http_methods) { @@http_methods }
-		@@http_methods.each {|http| define_method(http) {|*args| Request.new *[http, *args] } }
+
+    # attr_accessor :verbose, :logger, :default_agent
+
+		HTTP_METHODS.each do |http_method|
+		  define_method http_method do |args|
+		    request = Request.new args.merge method: http_method
+		    # request.execute
+        # request.scrape
+		    # scraper = Scraper.new
+		    # scraper.scrape request.response.body
+      end
+    end
+
+    # def configure &block
+    # end
+
 	end
 
 end

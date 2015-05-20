@@ -1,0 +1,3 @@
+describe Scrapula do
+  
+end

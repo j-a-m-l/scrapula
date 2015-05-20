@@ -3,6 +3,8 @@ if ENV['COVERAGE']
 	require 'simplecov'
 end
 
+require_relative '../lib/scrapula'
+
 RSpec.configure do |config|
   config.order = 'random'
 end
