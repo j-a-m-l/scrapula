@@ -1,6 +1,6 @@
 require 'rspec/core/rake_task'
 
-require './lib/scrapula'
+require './lib/scrapula/version'
 name = 'scrapula'
 version = Scrapula::VERSION
 

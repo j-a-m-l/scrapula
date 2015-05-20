@@ -1,4 +1,4 @@
-require './lib/scrapula'
+require './lib/scrapula/version'
 
 Gem::Specification.new do |s|
   s.name = 'scrapula'
