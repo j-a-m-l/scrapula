@@ -1,30 +1,31 @@
-# require 'digest/sha1'
-#
 module Scrapula
 	class Request
-# 		include Scrapula::Scraper
 
-		attr_reader :url, :method, :params
+		attr_reader :agent, :url, :method, :params
 
-		def initialize(url:, method:, params: {}, &block)
+		def initialize(url:, method:, params: [], &block)
 
 		# 	raise "Invalid http method: #{method}" unless Scrapula.http_methods.include? method
 
-		# 	# Prepend the protocol
-		# 	url.sub! /^(?!(?:https?:\/\/))/, 'http://'
+			# Prepend the protocol if necessary
+			@url = url.sub /^(?!(?:https?:\/\/))/, 'http://'
 
-    @url, @method, @params = url, method, params
+      # TODO
+      agent = Agent.new
 
-		# 	@method, @url, @data, @cache, @agent = method, url, data, {}, Agent.new
+      @agent, @method, @params = agent, method, params
 
-		# 	yield self if block_given?
+      # TODO
+      @headers = {}
+      @options = {
+        redirects: 0
+      }
 		end
 
-    def execute agent
-      agent.__send__ @method, @url, @params
-    end
-
-    def scrape
+    def execute
+      # TODO other methods
+      # TODO other parameters
+      Scrapula::Page.new agent.get @url, @params
     end
 
 # 		# Gets a raw page (Mechanize::Page object) TODO other agents...

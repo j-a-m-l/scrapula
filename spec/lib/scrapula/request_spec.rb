@@ -1,12 +1,29 @@
 describe Scrapula::Request do
 
-  let(:url) { 'example.net' }
+  let(:url)  { 'http://example.net' }
+  let(:data) { { url: url, method: 'get', params: [{ q: 'lol' }] } }
+
+  subject { described_class.new data }
 
   describe '#initialize' do
 
     describe 'requires an URL' do
-      context 'receives one without the HTTP protocol' do
-        it 'adds it'
+      %w[http https].each do |protocol|
+        context "receives one with the #{protocol.upcase} protocol" do
+          let(:url) { "#{protocol}://example.net" }
+
+          it 'maintains it' do
+            expect(described_class.new(url: url, method: :get).instance_variable_get :@url).to eq url
+          end
+        end
+      end
+
+      context 'receives one without protocol' do
+        let(:url) { 'example.net' }
+
+        it 'adds the HTTP one' do
+          expect(described_class.new(url: url, method: :get).instance_variable_get :@url).to eq "http://#{url}"
+        end
       end
     end
 
@@ -14,6 +31,7 @@ describe Scrapula::Request do
     end
 
     describe 'can receive parameters' do
+      it 'as an array'
     end
     'or not'
 
@@ -25,22 +43,42 @@ describe Scrapula::Request do
 
   describe '#execute' do
 
-    it 'performs an HTTP request to the URL with the params'
+    let(:agent_double) { instance_double Scrapula::Agent }
 
-    it 'returns the response'
+    let(:page_double) { instance_double Scrapula::Page }
 
-    #     context 'after receiving the page' do
-    #       it 'creates a new scraper'
-    #     end
+    let(:expects_agent) {
+      expect(subject).to receive(:agent).and_return agent_double
+    }
+
+    # TODO for each method
+
+    it 'performs an HTTP request using the attributes' do
+      expects_agent
+
+      expect(agent_double).to receive(:get) do |*args|
+        expect(args[0]).to eq data[:url]
+        expect(args[1]).to eq data[:params]
+
+        # TODO other parameters
+      end
+
+      subject.execute
+    end
+
+    it 'returns the received page' do
+      expect(agent_double).to receive(:get).and_return page_double
+      expects_agent
+
+      subject.execute
+    end
 
   end
 
+  # TODO agent
   %w[url method params].each do |attribute|
 
     describe "##{attribute}" do
-      let(:data) { { url: url, method: 'get', params: { q: 'lol' } } }
-      subject { described_class.new data }
-
       it { is_expected.to respond_to attribute }
 
       it "returns the established #{attribute} of the current request" do

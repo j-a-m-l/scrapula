@@ -1,4 +1,4 @@
-require 'scrapula'
+require_relative '../lib/scrapula'
 
 Scrapula.get "http://example.com/?q=#{params}" do
   number css: '#container ul > active.li' do |node, resource|
@@ -17,10 +17,17 @@ Scrapula.get "http://example.com/?q=#{params}" do
 
   number = css '#container .number', [:to_s, :strip, :to_i]
 
+  number css! '#container .number', [:to_s, :strip, :to_i]
+  number xpath! '//a', [:to_s, :strip, :to_i]
+
   number { css: '#container .number' }, [:to_s, :strip, :to_i]
+  number { xpath: '//a' }, [:to_s, :strip, :to_i]
+
+  # Infer query type
+  number '#container .number', [:to_s, :strip, :to_i]
 
   number do
-    validates({
+    validates!({
       presence: true,
       numerically: true,
     })

@@ -1,3 +1,3 @@
 module Scrapula
-	VERSION = '0.2.1'
+	VERSION = '0.4.8'
 end

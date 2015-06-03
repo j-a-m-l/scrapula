@@ -1,11 +1,17 @@
-require 'scrapula/version'
-require 'scrapula/agent'
-require 'scrapula/scraper'
-require 'scrapula/request'
+require_relative './scrapula/version'
+require_relative './scrapula/agent'
+require_relative './scrapula/scraper'
+require_relative './scrapula/request'
+require_relative './scrapula/page'
+require_relative './scrapula/data'
 
 module Scrapula
 
-  HTTP_METHODS = %w[get post]
+  # TODO benchmark
+  # AGENTS = %w[mechanize]
+
+  # TODO
+  HTTP_METHODS = %w[get]
 
   # # TODO verbose, logger
   # @verbose, @logger, @agent = false, nil, 'Mechanize'
@@ -15,12 +21,16 @@ module Scrapula
     # attr_accessor :verbose, :logger, :default_agent
 
 		HTTP_METHODS.each do |http_method|
-		  define_method http_method do |args|
-		    request = Request.new args.merge method: http_method
-		    # request.execute
-        # request.scrape
-		    # scraper = Scraper.new
-		    # scraper.scrape request.response.body
+		  define_method http_method do |*args, &block|
+
+		    # Prepare the request data
+        data = args[0].is_a?(Hash) ? args[0] : { url: args[0], params: args[1] }
+        data.merge! method: http_method
+
+		    request = Request.new data
+		    page = request.execute
+
+        block ? page.scrape(&block) : page
       end
     end
 
