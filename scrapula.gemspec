@@ -9,6 +9,8 @@ Gem::Specification.new do |s|
   s.email = 'scrapula@noijd.com'
   s.homepage = 'http://github.com/noijd/scrapula'
 
+  s.add_dependency 'mechanize', '~> 2.7.3'
+
   # TODO
   # s.add_runtime_dependency 'cucumber', '>= 1.1.1'
   # s.add_runtime_dependency 'childprocess', '>= 0.2.3'
@@ -25,4 +27,5 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_path = 'lib'
 	s.rdoc_options = ['--charset=UTF-8']
+
 end

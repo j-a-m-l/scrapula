@@ -7,6 +7,7 @@ S = ->(url, queries: nil, &block) {
     puts query
   }
 
+  # TODO Scrapula::S
   class Bla < BasicObject
     def method_missing name, *args, &block
       ::Kernel.puts name, args
@@ -20,3 +21,7 @@ S = ->(url, queries: nil, &block) {
 
   putter
 }
+
+# TODO return a class
+# def S()
+# end
