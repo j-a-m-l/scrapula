@@ -6,7 +6,7 @@ module Scrapula
     extend Forwardable
     
     # TODO url!
-    def_delegator :@page, :at!, :txt!
+    def_delegator :@page, :search!, :at!, :txt!
 
 	  def initialize page, &block
 	    @page, @data = page, {}

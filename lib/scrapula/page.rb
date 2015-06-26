@@ -19,7 +19,7 @@ module Scrapula
     def search! query, operations = [], &block
       result = @agent_page.search query
 
-      # TODO more results
+      # FIXME on every object
       result = operations.reduce(result) do |tmp, op|
         tmp.__send__ op
       end if result
