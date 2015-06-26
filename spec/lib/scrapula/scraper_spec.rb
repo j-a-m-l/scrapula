@@ -68,6 +68,11 @@ describe Scrapula::Scraper do
             end
           end
 
+          context "that doesn't find anything" do
+            it "doesn't crash"
+            it 'returns nil'
+          end
+
           context 'that returns only one element' do
             let(:expected_value) { 'example value' }
 
@@ -141,7 +146,9 @@ describe Scrapula::Scraper do
     end
 
     context 'with block with parameters' do
-      it 'yields the page'
+      it 'yields the page' do
+        expect {|b| described_class.new page_double, &b }.to yield_with_args page_double
+      end
     end
     
   end

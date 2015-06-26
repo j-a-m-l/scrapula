@@ -11,7 +11,7 @@ module Scrapula
 	  def initialize page, &block
 	    @page, @data = page, {}
 
-      instance_eval &block
+      block.arity == 0 ? instance_eval(&block) : block.call(@page)
     end
 
     def data!
