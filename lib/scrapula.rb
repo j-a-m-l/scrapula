@@ -27,8 +27,7 @@ module Scrapula
         data = args[0].is_a?(Hash) ? args[0] : { url: args[0], params: args[1] }
         data.merge! method: http_method
 
-		    request = Request.new data
-		    page = request.execute
+		    page = Request.new(data).execute
 
         block ? page.scrape(&block) : page
       end

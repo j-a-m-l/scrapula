@@ -15,6 +15,22 @@ module Scrapula
       scraper.instance_variable_get :@data
     end
 
+    # at returns the first one only, but search returns all
+    def search! query, operations = [], &block
+      result = @agent_page.search query
+
+      # TODO more results
+      result = operations.reduce(result) do |tmp, op|
+        tmp.__send__ op
+      end if result
+
+      yield result if block_given?
+
+      result
+    end
+
+    # at returns the first one only, but search returns all
+    # TODO merge with search!
     def at! query, operations = [], &block
       result = @agent_page.at query
       result = operations.reduce(result) {|tmp, op| tmp.__send__ op } if result

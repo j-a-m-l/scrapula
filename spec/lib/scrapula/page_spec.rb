@@ -33,6 +33,10 @@ describe Scrapula::Page do
     end
   end
 
+  # TODO
+  describe '#search!' do
+  end
+
   describe '#at!' do
 
     subject { described_class.new agent_page_double }

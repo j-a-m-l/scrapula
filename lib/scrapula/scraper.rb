@@ -4,7 +4,7 @@ module Scrapula
 	class Scraper
 
     extend Forwardable
-
+    
     # TODO url!
     def_delegator :@page, :at!, :txt!
 
