@@ -5,6 +5,11 @@ module Scrapula
       @agent_page = agent_page
     end
 
+    # TODO
+    # def url!
+    #   @agent_page.url
+    # end
+
     def scrape &block
       scraper = Scrapula::Scraper.new self, &block
       scraper.instance_variable_get :@data

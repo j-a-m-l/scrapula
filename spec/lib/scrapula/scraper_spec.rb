@@ -46,23 +46,39 @@ describe Scrapula::Scraper do
         end
 
         context 'query' do
-          it 'extracts text of result' do
-            expect(page_double).to receive(:txt!).with('#example').and_return 'example value'
 
-            described_class.new page_double do
-              example '#example'
+          shared_examples :query do
+            before(:each) {
+              expect(page_double).to receive(:txt!).with('.example').and_return expected_value
+            }
+
+            it 'extracts the text' do
+              described_class.new page_double do
+                example '.example'
+              end
+            end
+
+            it 'assigns the result to a hash' do
+              result = described_class.new page_double do
+                example '.example'
+              end
+              expected = { example: expected_value }
+
+              expect(result.data!).to eq expected
             end
           end
 
-          it 'assigns the result to hash' do
-            allow_example_query
+          context 'that returns only one element' do
+            let(:expected_value) { 'example value' }
 
-            result = described_class.new page_double do
-              example '#example'
-            end
-            expected = { example: 'example value' }
+            include_examples :query
+          end
 
-            expect(result.data!).to eq expected
+          # TODO
+          xcontext 'that returns several elements' do
+            let(:expected_value) { %w[value1 value2 value3] }
+
+            include_examples :query
           end
         end
 
