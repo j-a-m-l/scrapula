@@ -14,6 +14,7 @@ describe Scrapula::Page do
     let(:scraper_double) { instance_double Scrapula::Scraper }
 
     let(:expect_new_scraper) {
+      allow(scraper_double).to receive(:data!)
       expect(Scrapula::Scraper).to receive(:new).and_return scraper_double
     }
 
@@ -24,6 +25,7 @@ describe Scrapula::Page do
     
     it 'returns the scrapped data' do
       expect_new_scraper
+      expect(scraper_double).to receive(:data!).and_return example: 'example value'
 
       result = subject.scrape do
         example '#example'

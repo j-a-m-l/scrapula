@@ -12,7 +12,7 @@ module Scrapula
 
     def scrape &block
       scraper = Scrapula::Scraper.new self, &block
-      scraper.instance_variable_get :@data
+      scraper.data!
     end
 
     # at returns the first one only, but search returns all

@@ -6,7 +6,7 @@ module Scrapula
     extend Forwardable
     
     # TODO url!
-    def_delegator :@page, :search!, :at!, :txt!
+    def_delegators :@page, :search!, :at!, :txt!
 
 	  def initialize page, &block
 	    @page, @data = page, {}
@@ -14,6 +14,7 @@ module Scrapula
       block.arity == 0 ? instance_eval(&block) : block.call(@page)
     end
 
+    # TODO remove this method
     def data!
       result = {}
       @data.each_pair do |key, value|
