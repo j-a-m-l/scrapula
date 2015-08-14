@@ -15,6 +15,11 @@ module Scrapula
       scraper.data!
     end
 
+    def meta!
+      @meta ||= Meta.new self
+    end
+    alias metas! meta!
+
     # at returns the first one only, but search returns all
     def search! query, operations = [], &block
       result = @agent_page.search query

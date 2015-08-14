@@ -3,6 +3,7 @@ require_relative './scrapula/agent'
 require_relative './scrapula/scraper'
 require_relative './scrapula/request'
 require_relative './scrapula/page'
+require_relative './scrapula/page/meta'
 require_relative './scrapula/data'
 
 module Scrapula

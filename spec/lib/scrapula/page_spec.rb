@@ -4,12 +4,13 @@ describe Scrapula::Page do
 
   let(:agent_page_double) { instance_double Mechanize::Page }
 
+  subject { described_class.new agent_page_double }
+
   describe '#initialize' do
     it 'requires a Mechanize::Page'
   end
 
   describe '#scrape' do
-    subject { described_class.new agent_page_double }
 
     let(:scraper_double) { instance_double Scrapula::Scraper }
 
@@ -35,13 +36,21 @@ describe Scrapula::Page do
     end
   end
 
+  describe '#meta!' do
+    it 'returns a Scrapula::Meta object' do
+      subject.meta!
+    end
+  end
+
+  # TODO
+  describe '#metas!' do
+  end
+
   # TODO
   describe '#search!' do
   end
 
   describe '#at!' do
-
-    subject { described_class.new agent_page_double }
 
     let(:page_search_result_double) { instance_double Nokogiri::XML::NodeSet }
 
@@ -99,8 +108,6 @@ describe Scrapula::Page do
   end
 
   describe '#html!' do
-
-    subject { described_class.new agent_page_double }
 
     it 'performs the query' do
       expect(subject).to receive(:at!).with query, any_args

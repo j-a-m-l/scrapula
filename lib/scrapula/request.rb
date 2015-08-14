@@ -8,7 +8,7 @@ module Scrapula
 		# 	raise "Invalid http method: #{method}" unless Scrapula.http_methods.include? method
 
 			# Prepend the protocol if necessary
-			@url = url.sub /^(?!(?:https?:\/\/))/, 'http://'
+			@url = url.sub /\A(?!(?:https?:\/\/))/, 'http://'
 
       # TODO
       agent = Agent.new
