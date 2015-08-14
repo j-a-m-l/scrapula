@@ -9,17 +9,22 @@ describe Scrapula::Page::Meta do
   describe '#[]' do
     use_vcr_cassette
 
+    let(:url) { 'ogp.me' }
+
     it 'symbols'
 
     # TODO Unknown meta or meta does not have value
-    # FIXME other URL
-    let(:url) { 'http://ruby-doc.org/' }
 
     it '"charset" meta' do
-      expect(subject['charset']).to eq 'Webby'
+      expect(subject['charset']).to eq 'utf-8'
+    end
+
+    describe 'pragma directives' do
     end
 
     describe 'standard names' do
+      use_vcr_cassette
+
       # FIXME other URL
       let(:url) { 'http://ruby-doc.org/' }
 
@@ -44,16 +49,31 @@ describe Scrapula::Page::Meta do
       end
     end
 
-    describe 'Pragma directives' do
-    end
-
     describe 'Open Graph' do
+      use_vcr_cassette
+
+      let(:url) { 'ogp.me' }
+
+      it '"og:title" meta' do
+        expect(subject['og:title']).to eq 'Open Graph protocol'
+      end
+
+      it '"og:image:height" meta' do
+        expect(subject['og:image:height']).to eq '300'
+      end
     end
 
-    describe 'Other pragma directives' do
+    describe 'other pragma directives' do
     end
 
-    describe 'Other names' do
+    describe 'other names' do
+      use_vcr_cassette
+
+      let(:url) { 'https://dev.twitter.com/cards/markup' }
+
+      it '"twitter:title" meta' do
+        expect(subject['twitter:title']).to eq 'Cards Markup Tag Reference'
+      end
     end
   end
 
