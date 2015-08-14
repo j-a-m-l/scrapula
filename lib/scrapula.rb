@@ -33,6 +33,11 @@ module Scrapula
       end
     end
 
+    def meta url
+      get(url).meta!
+    end
+    alias metas meta
+
     # def configure &block
     # end
 

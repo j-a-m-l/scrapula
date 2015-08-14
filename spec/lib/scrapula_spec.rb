@@ -2,6 +2,8 @@ require 'scrapula'
 
 describe Scrapula do
 
+  let(:url) { 'http://example.com' }
+
   # TODO
   %w[get].each do |http_method|
 
@@ -11,7 +13,7 @@ describe Scrapula do
       describe 'creates a request' do
 
         let(:args) {
-          { url: 'http://example.com', params: [{ q: 'lol' }] }
+          { url: url, params: [{ q: 'lol' }] }
         }
 
         let(:request_double) {
@@ -109,6 +111,27 @@ describe Scrapula do
 
       end
     end
+  end
+
+  describe '.meta' do
+    let(:metas) { double }
+    let(:page_double) { instance_double Scrapula::Page }
+
+    it 'performs a GET request' do
+      allow(page_double).to receive(:meta!).and_return metas
+      expect(described_class).to receive(:get).with(url).and_return page_double
+      described_class.meta url
+    end
+
+    it 'returns the meta elements of the page' do
+      expect(page_double).to receive(:meta!).and_return metas
+      allow(described_class).to receive(:get).with(url).and_return page_double
+      expect(described_class.meta url).to eq metas
+    end
+  end
+
+  # TODO
+  describe '.metas' do
   end
 
   describe '.configure' do
