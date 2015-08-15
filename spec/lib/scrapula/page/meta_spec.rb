@@ -13,7 +13,9 @@ describe Scrapula::Page::Meta do
 
     it 'symbols'
 
-    # TODO Unknown meta or meta does not have value
+    it 'returns nil when does not include a meta' do
+      expect(subject['yeah']).to eq nil
+    end
 
     it '"charset" meta' do
       expect(subject['charset']).to eq 'utf-8'
@@ -60,6 +62,13 @@ describe Scrapula::Page::Meta do
 
       it '"og:image:height" meta' do
         expect(subject['og:image:height']).to eq '300'
+      end
+
+      context 'more than 1 property with the same name' do
+        # An array could be ambiguous
+        xit '"og:image:height" meta' do
+          expect(subject['og:image:height']).to eq '300'
+        end
       end
     end
 

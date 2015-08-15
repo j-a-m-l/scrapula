@@ -15,13 +15,17 @@ module Scrapula
         refresh
       ]
 
-      # "name" with content
+      # "name" with content NOTE currently not used
       STANDARD_NAMES = %w[
         application-name
         author
         description
         generator
         keywords
+      ]
+
+      # TODO include a list of common headers
+      HTTP_HEADERS = %w[
       ]
 
       def initialize page
@@ -31,33 +35,33 @@ module Scrapula
         # TODO generate method for each meta
       end
 
+      # TODO?
+      # def has? key
+      # end
+
+      # TODO?
+      # def all
+      # end
+
       def [] key
         case
           when CHARSET == key
             @page.instance_variable_get(:@agent_page).meta_charset.first
 
-          when PRAGMAS.include?(key)
+          when (PRAGMAS + HTTP_HEADERS).include?(key)
             @page_meta.at("[http-equiv='#{key}']").attr 'content'
-
-          when STANDARD_NAMES.include?(key)
-            @page_meta.at("[name='#{key}']").attr 'content'
 
           # Open Graph is not standard; uses "property" instead of "name"
           when key[/og:.+/]
             # TODO return more than 1 content for some meta
             @page_meta.at("[property='#{key}']").attr 'content'
 
-          # TODO is an HTTP header
-          # when key
-          #   @page_meta.at("[http-equiv='#{key}']").attr 'content'
-
           else
+            # TODO try http-equiv also
             @page_meta.at("[name='#{key}']").attr 'content'
         end
-
-      # TODO
       rescue NoMethodError
-        raise 'Unknown meta'
+        nil
       end
 
       private
