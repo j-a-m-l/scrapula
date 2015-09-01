@@ -3,11 +3,11 @@ require './lib/scrapula/version'
 Gem::Specification.new do |s|
   s.name = 'scrapula'
   s.version = Scrapula::VERSION
-  s.authors = ["Juan Antonio Martín Lucas"]
+  s.authors = ['Juan A. Martín Lucas']
   s.description = 'Succinctest crawler in the world?'
   s.summary = "scrapula-#{s.version}"
-  s.email = 'scrapula@noijd.com'
-  s.homepage = 'http://github.com/noijd/scrapula'
+  s.email = 'scrapula@jaml.site'
+  s.homepage = 'http://github.com/j-a-m-l/scrapula'
 
   s.add_dependency 'mechanize', '~> 2.7.3'
 
