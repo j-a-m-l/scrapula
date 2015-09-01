@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.summary = "scrapula-#{s.version}"
   s.email = 'scrapula@jaml.site'
   s.homepage = 'http://github.com/j-a-m-l/scrapula'
+  s.license = 'MIT'
 
   s.add_dependency 'mechanize', '~> 2.7.3'
 
