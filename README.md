@@ -1,3 +1,5 @@
+[![Build Status](TODO)
+
 Scrapula
 ========
 Scrapula is the licentious scraping library.
@@ -15,21 +17,52 @@ Scrapula.verbose = true
 ```
 
 API
-=
-TODO
+===
 
-You can also use the method get to obtain a page a manipulate it inside its block
+Perform requests:
 
-go -> get, post
+```ruby
+page = Scrapula.get 'example.net' #=> Scrapula::Page object
+
+page = Scrapula.post 'example.net', { q: 'a query' }   #=> Scrapula::Page object
+```
+
+Extract information from the page:
+
+```ruby
+# Using a CSS selector (all elements)
+page.search! 'a'
+
+# Using a CSS selector (fist element)
+page.at! 'h1'
+
+# Using XPath (fist element)
+page.at! '//'
+```
+
+Perform a GET request:
+
+```ruby
+Scrapula.get 'example.net
+```
 
 Examples
 --------
-TODO
+
+There are more examples in the `examples` folder.
+
+Changelog
+=========
+
+You can read previous changes in `CHANGELOG.md`
+
+Contributing
+============
 
 Authors
 =======
-Juan Antonio Martín Lucas (https://github.com/noijd)
+Juan A. Martín Lucas (https://github.com/j-a-m-l)
 
 License
 =======
-This package is licensed under the MIT license.
+This project is licensed under the MIT license. See [LICENSE]() for details.
