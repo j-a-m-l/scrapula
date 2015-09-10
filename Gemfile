@@ -12,10 +12,11 @@ end
 
 group :test do
 	gem 'rspec'
-	gem 'simplecov'
 
   gem 'webmock'
   gem 'vcr'
+
+  gem 'simplecov'
 end
 
 group :development, :test do

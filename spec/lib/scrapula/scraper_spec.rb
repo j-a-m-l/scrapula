@@ -1,5 +1,7 @@
 describe Scrapula::Scraper do
 
+  subject { described_class.new page_double }
+
   let(:page_double) {
     instance_double Scrapula::Page
   }
@@ -171,11 +173,13 @@ describe Scrapula::Scraper do
   end
 
   describe '#respond_to?' do
+    it 'responds always with `true`' do
+      expect(subject.respond_to? :any).to be true
+      expect(subject.respond_to? 'any.method').to be true
+    end
   end
 
   xdescribe '#execute' do
-
-    subject { described_class.new page_double }
 
     context 'without block' do
       it 'returns itself' do

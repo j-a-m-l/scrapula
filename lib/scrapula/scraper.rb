@@ -11,7 +11,7 @@ module Scrapula
 	  def initialize page, &block
 	    @page, @data = page, {}
 
-      block.arity == 0 ? instance_eval(&block) : block.call(@page)
+      (block.arity == 0 ? instance_eval(&block) : block.call(@page)) if block
     end
 
     # TODO remove this method
@@ -21,6 +21,10 @@ module Scrapula
         result[key] = value.is_a?(self.class) ? value.data! : value
       end
       result
+    end
+
+    def respond_to? name
+      true
     end
 
     private
@@ -46,11 +50,6 @@ module Scrapula
           @data[name] = @page.txt! *args
         end
 
-      end
-
-      # TODO
-      def respond_to? name
-        true
       end
 
 	end
