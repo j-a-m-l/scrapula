@@ -28,4 +28,17 @@ describe 'S' do
     end
   end
 
+  shortcuts = { g: 'get' }
+  
+  shortcuts.keys.each do |aka|
+    http_method = shortcuts[aka]
+
+    describe ".#{aka.to_s}" do
+      it "#{aka.to_s} performans a #{http_method.to_s.upcase} request" do
+        expect(Scrapula).to receive(http_method)
+        S.__send__ aka, 'url'
+      end
+    end
+  end
+
 end
