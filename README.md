@@ -46,6 +46,41 @@ Perform a GET request:
 Scrapula.get 'example.net
 ```
 
+S interface
+-----------
+This API is not required by default, so it is up to you to use it:
+```ruby
+require 'scrapula/s'
+```
+
+It provides the method and its shortcut For all HTTP verbs:
+
+```ruby
+S.get 'example.net'
+S.g 'example.net'
+
+S.post 'example.net'
+S.p 'example.net'
+
+S.put 'example.net'
+S.u 'example.net'
+
+S.patch 'example.net'
+S.a 'example.net'
+
+S.delete 'example.net'
+S.d 'example.net'
+
+S.head 'example.net'
+S.h 'example.net'
+```
+
+Additionally, GET requests, can be performed with through the shortest invocation:
+
+```ruby
+S 'example.net'
+```
+
 Examples
 --------
 
