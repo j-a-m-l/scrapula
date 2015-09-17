@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'mechanize'
+gemspec
 
 group :development do
 	gem 'rake'
