@@ -2,7 +2,12 @@
 
 Scrapula
 ========
-Scrapula is the licentious scraping library.
+Scrapula is a library for scraping web pages that simplifies some of the
+common actions that are involved.
+
+It has a very simple API that can be used in several ways and contexts, and
+another, shorter, that facilitates processing pages when characters are
+scarce, like irb / pry, or quick and dirty scripts.
 
 Requirements
 ============

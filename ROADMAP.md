@@ -23,7 +23,6 @@ This is a proposal and should not be interpreted literally. If you want to colla
 ## 1.0.0
 
  * Documented with TODO
- * Published to RubyGems.org
 
 ## 0.9.0
 

@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    scrapula (0.6.2)
-      mechanize (~> 2.7.3)
+    scrapula (0.6.3)
+      mechanize (~> 2.7, >= 2.7.3)
 
 GEM
   remote: http://rubygems.org/
